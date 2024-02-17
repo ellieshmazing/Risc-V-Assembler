@@ -57,6 +57,17 @@ def convertToBinary(num, digits):
 
     return binaryNum
 
+#Function to convert binary number to hexadecimal
+def convertToHex(binaryNum):
+    num = int(binaryNum, 2) #Convert to an integer
+    hexNum = format(num, 'x')   #Convert to hex
+
+    #Pad 0s until the number is the correct length
+    while (len(hexNum) < 8):
+        hexNum = '0' + hexNum
+
+    return hexNum
+
 def rAssembler(instructionTokens, idx):
     opcode = 51
     f3 = None
@@ -132,7 +143,11 @@ def rAssembler(instructionTokens, idx):
     rs1 = convertToBinary(rs1, 5)
     rs2 = convertToBinary(rs2, 5)
 
-    return f7 + rs2 + rs1 + f3 + rd + opcode + '\n'
+    #Concatenate binary values
+    assembledLine = f7 + rs2 + rs1 + f3 + rd + opcode
+    assembledLine = convertToHex(assembledLine)
+
+    return assembledLine + '\n'
 
 def iLoadAssembler(instructionTokens, idx):
     return 'iLoad'
